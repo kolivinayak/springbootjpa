@@ -9,16 +9,15 @@ import java.util.Optional;
 
 @Service
 public class CourseService {
-   
-	@Autowired 
-	private CourseRepository courseRepository;
-	
-	public List<Course> getAllCourses() {
-    	List<Course> courses = new ArrayList<>();
-    	courseRepository.findAll().forEach(courses::add);
-        System.out.println(courseRepository.findAll());
-        System.out.println(courses);
-    	return courses;
+
+    @Autowired
+    private CourseRepository courseRepository;
+
+    public List<Course> getAllCourses(String topicId) {
+        List<Course> courses = new ArrayList<>();
+        courseRepository.findByTopicId(topicId).forEach(courses::add);
+        //courseRepository.findAll().forEach(courses::add);
+        return courses;
     }
 
     public Optional<Course> getCourse(String id) {
@@ -30,9 +29,10 @@ public class CourseService {
         courseRepository.save(course);
     }
 
-    public Course updateCourse(Course course, String id) {
-    	return courseRepository.save(course);
+    public Course updateCourse(Course course) {
+        return courseRepository.save(course);
     }
+
     public void deleteCourse(String id) {
         courseRepository.deleteById(id);
     }
